@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>museum</title>
+    <link rel="stylesheet" type="text/css" href="./css/museum.css"/>
+</head>
+
+<body>
+<div>
+    <section class="top">
+
+        <a href="index.html">Query</a>
+    </section>
+
+    <section class="left">
+        <div class="filter">
+            <h4>Questions</h4>
+            <div>
+                <div>
+                    <div>
+                        <label for="shortest">
+                            <input type="radio" id="shortest" name="question" value="shortest"> the shortest artefact
+                        </label>
+                    </div>
+                    <div>
+                        <label for="tallest">
+                            <input type="radio" id="tallest" name="question" value="tallest"> the tallest artefact
+                        </label>
+                    </div>
+                    <div>
+                        <label for="lightest">
+                            <input type="radio" id="lightest" name="question" value="lightest"> the lightest artefact
+                        </label>
+                    </div>
+                    <div>
+                        <label for="heaviest">
+                            <input type="radio" id="heaviest" name="question" value="heaviest"> the heaviest artefact
+                        </label>
+                    </div>
+                    <div>
+                        <label for="pottery">
+                            <input type="radio" id="pottery" name="question" value="Samian"> which artefacts are in Samian
+                        </label>
+                    </div>
+                    <div>
+                        <input type="button" value="get" onclick="getRadio()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="right">
+        <div>
+            <h2 id="quantity">Answer</h2>
+            <!-- 遍历物品 -->
+            <div id="show"> </div>
+        </div>
+    </section>
+
+</div>
+</body>
+
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<script>
+
+    function getRadio(){
+        let str = '';
+        var val = $("input[name='question']:checked").val();
+        console.log(val);
+        if(val=="shortest"){
+            str += `<h4>Slide</h4>`;
+            str += `<p> Material: glass</p>`;
+            str += `<span style="white-space: nowrap"> Length: 7.0CM</span>`;
+            str += `<span style="white-space: nowrap"> Width: 14.0CM</span>`;
+            str += `<span style="white-space: nowrap"> Height: 0.25CM</span>`;
+            str += `<span style="white-space: nowrap"> Weight: 70.0G</span>`;
+            str += `<div>-------------------------------------------------</div>`
+        }
+        if(val == "tallest"){
+            str += `<h4>MAG1924.2</h4>`;
+            str += `<p> Material: stone</p>`;
+            str += `<p> Type: figurine</p>`;
+            str += `<span style="white-space: nowrap"> Width: 6.5CM</span>`;
+            str += `<span style="white-space: nowrap"> Height: 21.0CM</span>`;
+            str += `<span style="white-space: nowrap"> Weight: 852.0G</span>`;
+            str += `<p> Note: figurine of Jupiter</p>`;
+            str += `<div>-------------------------------------------------</div>`
+        } else if(val == "lightest"){
+            str += `<h4>SH.1824</h4>`;
+            str += `<p> Material: metal</p>`;
+            str += `<p> Type: spoon</p>`;
+            str += `<span style="white-space: nowrap"> Length: 14.0CM</span>`;
+            str += `<span style="white-space: nowrap"> Weight: 0.0242G</span>`;
+            str += `<p> Note: complete</p>`;
+            str += `<div>-------------------------------------------------</div>`
+        } else if(val == "heaviest"){
+            str += `<h4>MAG1924.2</h4>`;
+            str += `<p> Material: stone</p>`;
+            str += `<p> Type: figurine</p>`;
+            str += `<span style="white-space: nowrap"> Width: 6.5CM</span>`;
+            str += `<span style="white-space: nowrap"> Height: 21.0CM</span>`;
+            str += `<span style="white-space: nowrap"> Weight: 852.0G</span>`;
+            str += `<p> Note: figurine of Jupiter</p>`;
+            str += `<div>-------------------------------------------------</div>`
+        } else if(val == "Samian"){
+            str += `<h4>MAG1909.137.4</h4>`;
+            str += `<p> Type: pottery</p>`;
+            str += `<p> Style: Samian</p>`;
+            str += `<p> Note: incised with graffitos</p>`;
+            str += `<div>-------------------------------------------------</div>`
+
+            str += `<h4>MAG1909.226</h4>`;
+            str += `<p> Type: potsherd</p>`;
+            str += `<p> Style: Samian</p>`;
+            str += `<p> Note: incised with letters INDI</p>`;
+            str += `<div>-------------------------------------------------</div>`
+
+            str += `<h4>MAG1909.221.2</h4>`;
+            str += `<p> Type: cup</p>`;
+            str += `<p> Style: Samian</p>`;
+            str += `<p> Note: with internal stamp VIRONIO</p>`;
+            str += `<div>-------------------------------------------------</div>`
+
+            str += `<h4>MAG1909.417</h4>`;
+            str += `<p> Type: pot</p>`;
+            str += `<p> Style: Samian</p>`;
+            str += `<p> Note: incomplete</p>`;
+            str += `<div>-------------------------------------------------</div>`
+
+            str += `<h4>MAG1924.2</h4>`;
+            str += `<p> Type: bowl</p>`;
+            str += `<p> Style: Samian</p>`;
+            str += `<span style="white-space: nowrap"> Length: 10.0CM</span>`;
+            str += `<span style="white-space: nowrap"> Width: 16CM</span>`;
+            str += `<span style="white-space: nowrap"> Height: 9.0CM</span>`;
+            str += `<span style="white-space: nowrap"> Weight: 240.0G</span>`;
+            str += `<p> Note: incomplete</p>`;
+            str += `<div>-------------------------------------------------</div>`
+
+            str += `<h4>MAG</h4>`;
+            str += `<p> Type: bowl</p>`;
+            str += `<p> Style: Samian</p>`;
+            str += `<p> Note: rebuilt</p>`;
+            str += `<div>-------------------------------------------------</div>`
+
+            str += `<h4>SF.45</h4>`;
+            str += `<p> Type: bowl</p>`;
+            str += `<p> Style: Samian</p>`;
+            str += `<span style="white-space: nowrap"> Width: 25CM</span>`;
+            str += `<span style="white-space: nowrap"> Height: 15.0CM</span>`;
+            str += `<span style="white-space: nowrap"> Weight: 1.4.0G</span>`;
+            str += `<div>-------------------------------------------------</div>`
+        }
+        $('#show').html(str);
+    }
+
+    function showData(data) {
+
+        $('#quantity').html(data.length + " items");
+        let str = '';
+
+        if(data.length == 0) {
+            str += `<h5>` + `Sorry, no results found!` +  `</h5>`;
+        }
+
+        $.each(data, function(i,item){
+            str += `<h4>` + item.accessionNumber_uri +  `</h4>`;
+            if(item.length!=null) {
+                str += `<span style="white-space: nowrap"> Length:` + item.length +  `CM</span>`;
+            }
+            if(item.width!=null) {
+                str += `<span style="white-space: nowrap"> Width:` + item.width +  `CM</span>`;
+            }
+            if(item.height!=null) {
+                str += `<span style="white-space: nowrap"> Height:` + item.height +  `CM</span>`;
+            }
+            if(item.weight!=null) {
+                str += `<span> Weight:` + item.weight +  `G</span>`;
+            }
+            if(item.note!=null) {
+                str += `<span> Note:` + item.note +  `</span>`;
+            }
+            str += `<div>-------------------------------------------------</div>`
+        })
+
+        $('#show').html(str);
+    }
+</script>
+</html>

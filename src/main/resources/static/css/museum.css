@@ -1,0 +1,64 @@
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.left {
+    display:      inline;
+    float:        left;
+    margin-left:  10px;
+    margin-right: 10px;
+    width:        20%;
+}
+
+.right{
+    display:      inline;
+    float:        left;
+    margin-left:  10px;
+    margin-right: 10px;
+    width:        60%;
+}
+
+.top {
+    border-bottom: thin solid rgb(218, 218, 218);
+    padding-bottom: 10px;
+}
+
+.left {
+    margin: 5px;
+}
+
+label {
+    cursor: pointer;
+}
+
+.filter {
+    margin:10px;
+    border-bottom: thin solid rgb(218, 218, 218);
+}
+
+.filter h4 {
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+.clearFacet {
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+.clearFacet:before {
+    color: #999;
+    content: '× ';
+}
+
+.search-input {
+    font-size: 16px;
+    padding-right: 20px;
+}
+
+.clearQuery {
+    color: #999;
+    cursor: pointer;
+    margin-left: -20px;
+}

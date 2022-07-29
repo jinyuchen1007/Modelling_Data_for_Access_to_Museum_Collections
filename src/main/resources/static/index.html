@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>museum</title>
+    <link rel="stylesheet" type="text/css" href="./css/museum.css"/>
+</head>
+
+<body>
+    <div>
+        <section class="top">
+            <input id="query_type" type="text" class="search-input" /> <a class="clearQuery">&times;</a>
+            <button id="query_bt">Search</button>
+            <button id="findAll_bt">All</button>
+            <a style="float: right" href="questions.html">Competency Questions</a>
+        </section>
+
+        <section class="left">
+            <div class="filter">
+                <h4>Material</h4>
+                <div>
+                    <div>
+                        <label>
+                            <input type="checkbox">attribute's value
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="filter">
+                <h4>Type</h4>
+                <div>
+                    <div>
+                        <label>
+                            <input type="checkbox">attribute's value
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="filter">
+                <h4>Site</h4>
+                <div>
+                    <div>
+                        <label>
+                            <input type="checkbox">attribute's value
+<!--                            <input type="checkbox">Europe<br/>-->
+<!--                            <input type="checkbox">Asia<br/>-->
+<!--                            <input type="checkbox">Africa<br/>-->
+<!--                            <input type="checkbox">America-->
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="right">
+            <div>
+                <h2 id="quantity">how many items</h2>
+                <p class="wrapper-facets">
+                    <a class="clearFacet">Clear All</a>
+<!--                    <a class="clearFacet">123</a>-->
+                </p>
+                <!-- 遍历物品 -->
+                <div id="show"> </div>
+            </div>
+        </section>
+
+    </div>
+</body>
+
+<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+<script>
+
+    // 清空搜索框
+    $("a.clearQuery").click(function () {
+        $("input.search-input").val("");
+    });
+
+    // 查找全部artefacts
+    $('#findAll_bt').click(function () {
+
+        let str = '';
+        $.ajax({
+            type: "get",      // 请求方式
+            url: "/findAll",  // 请求路径
+            dataType: "json", // 预期返回一个 json 类型数据
+            success:function(data){
+                showData(data);
+            }
+        });
+    });
+
+    // 根据搜索框内容查找artefacts
+    $('#query_bt').click(function () {
+
+        let uri = $('#query_type').val();
+        $.ajax({
+            type: "get",
+            url: "/findByAttributes?uri="+uri,
+            dataType: "json",
+            success:function(data) {
+                showData(data);
+            }
+        });
+    });
+
+    // 展示数据
+    function showData(data) {
+
+        $('#quantity').html(data.length + " items");
+        let str = '';
+
+        if(data.length == 0) {
+            str += `<h5>` + `Sorry, no results found!` +  `</h5>`;
+        }
+
+        $.each(data, function(i,item){
+
+            console.log(item);
+
+            str += `<h4>` + item.accessionNumber.accessionNumber_uri +  `</h4>`;
+            if(item.material != null) {
+                str += `<p> Material: ` + item.material +  `</p>`;
+            }
+            if(item.type != null) {
+                str += `<p> Type: ` + item.type +  `</p>`;
+            }
+            if(item.style != null) {
+                str += `<p> Style: ` + item.style +  `</p>`;
+            }
+            if(item.accessionNumber.site != null) {
+                str += `<p> Site: ` + item.accessionNumber.site +  `</p>`;
+            }
+            if(item.accessionNumber.length != null) {
+                str += `<span style="white-space: nowrap"> Length: ` + item.accessionNumber.length +  `CM</span>`;
+            }
+            if(item.accessionNumber.width != null) {
+                str += `<span style="white-space: nowrap"> Width: ` + item.accessionNumber.width +  `CM</span>`;
+            }
+            if(item.accessionNumber.height != null) {
+                str += `<span style="white-space: nowrap"> Height: ` + item.accessionNumber.height +  `CM</span>`;
+            }
+            if(item.accessionNumber.weight != null) {
+                str += `<span style="white-space: nowrap"> Weight: ` + item.accessionNumber.weight +  `G</span>`;
+            }
+            if(item.accessionNumber.note!=null) {
+                str += `<p> Note: ` + item.accessionNumber.note +  `</p>`;
+            }
+            str += `<div>-------------------------------------------------</div>`
+        })
+
+        $('#show').html(str);
+    }
+</script>
+</html>
