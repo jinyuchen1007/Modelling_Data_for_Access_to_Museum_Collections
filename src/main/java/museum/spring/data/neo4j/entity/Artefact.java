@@ -19,7 +19,6 @@ public class Artefact implements Serializable {
 
     private String style;
 
-    //private String site;
-
+    private String site;
 
 }

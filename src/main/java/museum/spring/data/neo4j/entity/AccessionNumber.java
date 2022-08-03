@@ -38,8 +38,6 @@ public class AccessionNumber implements Serializable {
     @Property(name = "ns0__note")
     private String note;
 
-
-
     public AccessionNumber(String accessionNumber_uri) {
         this.accessionNumber_uri = accessionNumber_uri;
     }

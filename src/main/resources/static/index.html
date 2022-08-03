@@ -120,10 +120,15 @@
         let style = $("input[name='style']:checked").val();
         let site = $("input[name='site']:checked").val();
 
+        console.log(material);
+        console.log(type);
+        console.log(style);
+        console.log(site);
+
         let str = '';
         $.ajax({
             type: "get",      // 请求方式
-            url: "/findByFaceted/" + material + "/" + type + "/" + style + "/" + site,  // 请求路径
+            url: "/findByFaceted?material=" + material + "&type=" + type + "&style=" + style + "&site=" + site,  // 请求路径
             dataType: "json", // 预期返回一个 json 类型数据
             success:function(data){
                 let res = unique(data);
