@@ -12,6 +12,7 @@
             <input id="query_type" type="text" class="search-input" /> <a class="clearQuery">&times;</a>
             <button id="query_bt">Search</button>
             <button id="findAll_bt">All</button>
+            <button type="button" onclick="javascript:window.location.reload()">Back</button>
             <a style="float: right" href="questions.html">Competency Questions</a>
         </section>
 
@@ -19,42 +20,48 @@
             <div class="filter">
                 <h4>Material</h4>
                 <div>
-                    <div>
-                        <label>
-                            <input type="checkbox">attribute's value
-                        </label>
-                    </div>
+                    <input name="material" type="checkbox" value="bronze">bronze<br/>
+                    <input name="material" type="checkbox" value="clay">clay<br/>
+                    <input name="material" type="checkbox" value="copper">copper<br/>
+                    <input name="material" type="checkbox" value="iron">iron<br/>
+                    <input name="material" type="checkbox" value="rock">rock<br/>
                 </div>
             </div>
             <div class="filter">
                 <h4>Type</h4>
                 <div>
-                    <div>
-                        <label>
-                            <input type="checkbox">attribute's value
-                        </label>
-                    </div>
+                    <input name="type" type="checkbox" value="axe">axe<br/>
+                    <input name="type" type="checkbox" value="bracelet">bracelet<br/>
+                    <input name="type" type="checkbox" value="cup">cup<br/>
+                    <input name="type" type="checkbox" value="figurine">figurine<br/>
+                    <input name="type" type="checkbox" value="plate">plate<br/>
+                </div>
+            </div>
+            <div class="filter">
+                <h4>Style</h4>
+                <div>
+                    <input name="style" type="checkbox" value="Brrowdale">Brrowdale<br/>
+                    <input name="style" type="checkbox" value="Roman">Roman<br/>
+                    <input name="style" type="checkbox" value="Samian">Samian<br/>
+                    <input name="style" type="checkbox" value="Wirral">Wirral<br/>
                 </div>
             </div>
             <div class="filter">
                 <h4>Site</h4>
                 <div>
-                    <div>
-                        <label>
-                            <input type="checkbox">attribute's value
-<!--                            <input type="checkbox">Europe<br/>-->
-<!--                            <input type="checkbox">Asia<br/>-->
-<!--                            <input type="checkbox">Africa<br/>-->
-<!--                            <input type="checkbox">America-->
-                        </label>
-                    </div>
+                    <input name="site" type="checkbox" value="United_Kingdom">United_Kingdom<br/>
+                    <input name="site" type="checkbox" value=Manchester">Manchester<br/>
+                    <input name="site" type="checkbox" value="Cyprus">Cyprus<br/>
+                    <input name="site" type="checkbox" value="France">France<br/>
+                    <input name="site" type="checkbox" value="Turkey">Turkey<br/>
                 </div>
             </div>
+            <button id="query_bt2">Search</button>
         </section>
 
         <section class="right">
             <div>
-                <h2 id="quantity">how many items</h2>
+                <h2 id="quantity">The number of artefacts</h2>
                 <p class="wrapper-facets">
                     <a class="clearFacet">Clear All</a>
 <!--                    <a class="clearFacet">123</a>-->
@@ -84,7 +91,8 @@
             url: "/findAll",  // 请求路径
             dataType: "json", // 预期返回一个 json 类型数据
             success:function(data){
-                showData(data);
+                let res = unique(data);
+                showData(res);
             }
         });
     });
@@ -98,15 +106,38 @@
             url: "/findByAttributes?uri="+uri,
             dataType: "json",
             success:function(data) {
-                showData(data);
+                let res = unique(data);
+                showData(res);
             }
         });
     });
 
+    // 根据faceted search查找artefacts
+    $('#query_bt2').click(function () {
+
+        let material = $("input[name='material']:checked").val();
+        let type = $("input[name='type']:checked").val();
+        let style = $("input[name='style']:checked").val();
+        let site = $("input[name='site']:checked").val();
+
+        let str = '';
+        $.ajax({
+            type: "get",      // 请求方式
+            url: "/findByFaceted/" + material + "/" + type + "/" + style + "/" + site,  // 请求路径
+            dataType: "json", // 预期返回一个 json 类型数据
+            success:function(data){
+                let res = unique(data);
+                showData(res);
+            }
+        });
+
+    });
+
+
     // 展示数据
     function showData(data) {
 
-        $('#quantity').html(data.length + " items");
+        $('#quantity').html(data.length + " artefacts");
         let str = '';
 
         if(data.length == 0) {
@@ -128,7 +159,7 @@
                 str += `<p> Style: ` + item.style +  `</p>`;
             }
             if(item.accessionNumber.site != null) {
-                str += `<p> Site: ` + item.accessionNumber.site +  `</p>`;
+                str += `<p> Site: ` + item.site +  `</p>`;
             }
             if(item.accessionNumber.length != null) {
                 str += `<span style="white-space: nowrap"> Length: ` + item.accessionNumber.length +  `CM</span>`;
@@ -145,10 +176,22 @@
             if(item.accessionNumber.note!=null) {
                 str += `<p> Note: ` + item.accessionNumber.note +  `</p>`;
             }
-            str += `<div>-------------------------------------------------</div>`
+            str += `<div>-----------------------------------------------------------------------------------------</div>`
         })
 
         $('#show').html(str);
     }
+
+    // 去重
+    function unique(arr) {
+
+        let hash = {};
+        arr = arr.reduce(function(item, next) {
+            hash[next.accessionNumber.accessionNumber_uri] ? '' : hash[next.accessionNumber.accessionNumber_uri] = true && item.push(next);
+            return item
+        }, []);
+        return arr;
+    }
+
 </script>
 </html>
